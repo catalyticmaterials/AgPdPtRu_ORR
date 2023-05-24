@@ -55,8 +55,12 @@ cmap = truncate_colormap(plt.get_cmap('viridis'), minval=1.0, maxval=0.0, n=100)
 l, c, a = [], [], []
 for i, lib in enumerate(library_names):
 
-    with open(f'dist_libraries/{lib}_exp_adj.pkl', 'rb') as input:
-        dists = pickle.load(input)
+    if lib == 'AgPtRu':
+        with open(f'dist_libraries/{lib}_exp_adj.pkl', 'rb') as input:
+            dists = pickle.load(input)
+    else:
+        with open(f'dist_libraries/{lib}_exp.pkl', 'rb') as input:
+            dists = pickle.load(input)
 
     for j, d in enumerate(dists):
         comp = [d['comp'][e] for e in ['Ag','Pd','Pt','Ru']]

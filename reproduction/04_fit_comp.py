@@ -70,18 +70,21 @@ with open(f'dist_libraries/AgPdPtRu_equi.pkl', 'rb') as input:
     equi_dists = pickle.load(input)
 
 l, c, a = [], [], []
-for i, library in enumerate(library_names):
-    alloy = library.translate({ord(i): None for i in 'hi2'})
+for i, lib in enumerate(library_names):
 
-    with open(f'dist_libraries/{library}_exp_adj.pkl', 'rb') as input:
-        dists = pickle.load(input)
+    if lib == 'AgPtRu':
+        with open(f'dist_libraries/{lib}_exp_adj.pkl', 'rb') as input:
+            dists = pickle.load(input)
+    else:
+        with open(f'dist_libraries/{lib}_exp.pkl', 'rb') as input:
+            dists = pickle.load(input)
 
     for j, d in enumerate(dists):
         comp = [d['comp'][e] for e in ['Ag','Pd','Pt','Ru']]
-        if j not in exclude_ids[library]:
+        if j not in exclude_ids[lib]:
             l.append(d)
             c.append(comp)
-            a.append(alloy)
+            a.append(lib)
 
 # Define kernel to use for Gaussian process regressors
 kernel = C(constant_value=0.05, constant_value_bounds=(1e-5, 1e1))\

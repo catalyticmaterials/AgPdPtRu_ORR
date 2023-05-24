@@ -25,8 +25,12 @@ lib_list, c, y = [], [], []
 for i, lib in enumerate(library_names):
     elems = [lib[i:i+2] for i in range(len(lib))[::2]]
 
-    with open(f'dist_libraries/{lib}_exp_adj.pkl', 'rb') as input:
-        dists = pickle.load(input)
+    if lib == 'AgPtRu':
+        with open(f'dist_libraries/{lib}_exp_adj.pkl', 'rb') as input:
+            dists = pickle.load(input)
+    else:
+        with open(f'dist_libraries/{lib}_exp.pkl', 'rb') as input:
+            dists = pickle.load(input)
 
     rs, a = [], []
     m = []
@@ -46,7 +50,7 @@ for i, lib in enumerate(library_names):
     rs = np.array(rs)
     rs = molar_fractions_to_cartesians(rs)
     fig, ax = plt.subplots(figsize=(8, 8))
-    prepare_triangle_plot(ax, elems, labels=False)
+    prepare_triangle_plot(ax, elems, labels=True)
 
     # Plot data
     ax.scatter(*rs, c=np.array(a), s=70, cmap=cmap, marker='o', zorder=0, lw=0.2, vmin=-0.6, vmax=0.0)

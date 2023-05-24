@@ -54,8 +54,12 @@ l, c, a = [], [], []
 for i, lib in enumerate(library_names):
     elems = [lib[i:i+2] for i in range(len(lib))[::2]]
 
-    with open(f'dist_libraries/{lib}_exp_adj.pkl', 'rb') as input:
-        dists = pickle.load(input)
+    if lib == 'AgPtRu':
+        with open(f'dist_libraries/{lib}_exp_adj.pkl', 'rb') as input:
+            dists = pickle.load(input)
+    else:
+        with open(f'dist_libraries/{lib}_exp.pkl', 'rb') as input:
+            dists = pickle.load(input)
 
     for j, d in enumerate(dists):
         comp = [d['comp'][e] for e in ['Ag','Pd','Pt','Ru']]
@@ -125,5 +129,5 @@ for i, params in enumerate(param_combinations):
                     fig.savefig(filename)
                     print(f'[SAVED] {filename}')
                     plt.close()
-        
+
         print(f'Fit with {params} on {dist} distributions yielded test MAE of {np.mean(np.abs(all_test_err)):.3f} mA')
