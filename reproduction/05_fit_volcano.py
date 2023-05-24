@@ -88,18 +88,9 @@ ads = 'both'
 
 for i, params in enumerate(param_combinations):
     for dist in ['gross','net']:
-        if i != 1 or dist != 'gross':
-            continue
         all_test_err = np.array([])
 
-        super_fig, ax = plt.subplots(1, 4, figsize=(22.5, 7), sharey=True, sharex=True)
-        
-        counter = 0
-
         for lib in library_names:
-            if lib == 'AgPdPtRu':
-                continue
-
             mask = np.array(a) != lib
             train_ids = np.arange(len(a))[mask]
             test_ids = np.arange(len(a))[~mask]
@@ -108,7 +99,6 @@ for i, params in enumerate(param_combinations):
                         tol=1e-8, bounds=[bnds[k] for k in params], method='L-BFGS-B')
             
             p = dict(zip(params, res.x))
-            #p = {'a':1,'b':0.5}
             result = [[], []], [[], []]
 
             for j, ids in enumerate([train_ids,test_ids]):
@@ -129,34 +119,11 @@ for i, params in enumerate(param_combinations):
                 s = '\n'.join([s0,s1,s2,*s3])
                 
                 for k, e in enumerate(['Ag','Pd','Pt','Ru']):
-                    #fig = plot_parity(*result[0],*result[1], s, [-0.7, 0.1], comp=np.array(c)[test_ids,k])
-                    #plt.tight_layout()
-                    #filename = f'plots_parity/{dist}_{i}_{lib}_{e}.png'
-                    #fig.savefig(filename)
-                    #print(f'[SAVED] {filename}')
-                    #plt.close()
-
-                    if e == 'Ru':
-                        ax[counter].scatter(result[0][1],result[0][0], c='grey', s=10, alpha=0.20)
-                        ax[counter].scatter(result[1][1],result[1][0], c=np.array(c)[test_ids,k], cmap=cmap, s=10, alpha=0.8, vmin=0.0, vmax=0.75)
-                        limits = [-0.7, 0.1]
-                        # plot solid diagonal line
-                        ax[counter].plot([limits[0], limits[1]], [limits[0], limits[1]], 'k-', linewidth=1.0)
-
-                        # plot dashed diagonal lines 0.1 eV above and below solid diagonal line
-                        pm = 0.1
-                        ax[counter].plot([limits[0], limits[1]], [limits[0] + pm, limits[1] + pm], 'k--', linewidth=1.0, label=r'$\pm %.2f \mathrm{eV}$' % pm)
-                        ax[counter].plot([limits[0] + pm, limits[1]], [limits[0], limits[1] - pm], 'k--', linewidth=1.0)
-
-                        ax[counter].text(0.01, 0.99, s, family='monospace', fontsize=18, transform=ax[counter].transAxes, va='top', color='k')
-                ax[counter].set_xlabel(r'Exp. current density [mA/cm$^2$]',fontsize=18)
-                ax[counter].tick_params(labelsize=14)
-                counter += 1
+                    fig = plot_parity(*result[0],*result[1], s, [-0.7, 0.1], comp=np.array(c)[test_ids,k])
+                    plt.tight_layout()
+                    filename = f'plots_parity/{dist}_{i}_{lib}_{e}.png'
+                    fig.savefig(filename)
+                    print(f'[SAVED] {filename}')
+                    plt.close()
         
-        ax[0].set_ylabel(r'Pred. current density [mA/cm$^2$]', fontsize=18)
-        ax[0].set(xlim=(limits[0], limits[1]),ylim=(limits[0], limits[1]))
-        ax[0].set_xticks(np.linspace(-0.6,0.0,7))
-        plt.tight_layout()
-        plt.subplots_adjust(wspace=0.05)
-        super_fig.savefig('superfig.png')
         print(f'Fit with {params} on {dist} distributions yielded test MAE of {np.mean(np.abs(all_test_err)):.3f} mA')
