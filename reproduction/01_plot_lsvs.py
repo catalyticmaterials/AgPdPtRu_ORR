@@ -4,7 +4,6 @@ import numpy as np
 import pickle
 from utils.plot import truncate_colormap
 
-# define plotter for lsvs
 def plot_lsvs(dists, highlight_elem, excl = None):
     fig, ax = plt.subplots(1, 1, figsize=(7, 7))
     ax.set_xlabel(r'Potential vs. RHE [mV]', fontsize=18)
@@ -99,8 +98,6 @@ for i, lib in enumerate(library_names):
         print(f'[SAVED] {filename}')
         plt.close()
 
-    #if lib == 'PdPtRu':
-    #curr_cmap = truncate_colormap(plt.get_cmap('viridis'), minval=0.0, maxval=0.0, n=100)
     fig, ax = plt.subplots(1, 1, figsize=(7, 7))
     ax.set_xlabel(r'Potential vs. RHE [mV]', fontsize=18)
     ax.set_ylabel(r'Current density [mA/cm$^2$]', fontsize=18)
@@ -111,7 +108,6 @@ for i, lib in enumerate(library_names):
         elif j in excl:
             continue
         ax.plot(np.linspace(0, 900, 500), d['curr'], alpha=0.3, color=plt.get_cmap('viridis')(-d['curr'][471] / 0.6))
-    #ax.axhline(0.0, linestyle='--', color='k', alpha=0.5)
     ax.axvline(850, linestyle='--', color='k', alpha=0.5)
     ax.set(xlim=(600, 900), ylim=(-0.8, 0.1))
     filename = f'plots_lsvs/{lib}_curr.png'
