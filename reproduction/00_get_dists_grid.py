@@ -29,7 +29,6 @@ alloy = 'AgPdPtRu'
 elements = ['Ag', 'Ir', 'Pd', 'Pt', 'Ru']
 
 # Iterate through a 5% composition grid and predict adsorbtion energy distributions
-
 frac_list = get_molar_fractions(0.05, 4)
 dict_list = []
 
