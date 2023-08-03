@@ -13,7 +13,7 @@ An overview of the repository:
 - *02_shift_agptru.py* fits the discrepancy between materials libraries as described in the supplementary information of the manuscript.
 - *03_plot_libraries.py* recreates both ternary and 3d plots.
 - *04_fit_comp.py* fits the activities to the as-deposited alloy compositions.
-- *05_fit_volcano* fits the activities using the theory-derived expression.
-- *06_fit_histogram* fits the activities using SKlearn regression models.
+- *05_fit_volcano.py* fits the activities using the theory-derived expression.
+- *06_fit_histogram.py* fits the activities using SKlearn regression models.
 - *07_plot_predictions.py* plots activity predictions in ternary plots.
 - *08_flexible_comp.py* recreates the ternary plots included in figure 4.
