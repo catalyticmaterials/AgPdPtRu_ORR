@@ -9,46 +9,6 @@ from sklearn.gaussian_process import GaussianProcessRegressor as GPR
 
 np.random.RandomState(42)
 
-def plot_parity(trp, trt, tep, tet, string, limits, comp=None):
-    fig, ax = plt.subplots(1, 1, figsize=(7, 7))
-    ax.set_xlabel(r'Exp. current density [mA/cm$^2$]',fontsize=18)
-    ax.set_ylabel(r'Pred. current density [mA/cm$^2$]', fontsize=18)
-    ax.set_xlim(limits[0], limits[1])
-    ax.set_ylim(limits[0], limits[1])
-
-    ax.scatter(np.array(trt), np.array(trp), c='grey', s=10, alpha=0.3)
-    if comp.all() != None:
-        ax.scatter(np.array(tet), np.array(tep), c=comp, cmap=cmap, s=10, alpha=0.75, vmin=0.0, vmax=0.75)
-    else:
-        ax.scatter(np.array(tet), np.array(tep), c='crimson', s=10, alpha=0.75)
-
-    # plot solid diagonal line
-    ax.plot([limits[0], limits[1]], [limits[0], limits[1]], 'k-', linewidth=1.0)
-
-    # plot dashed diagonal lines 0.1 eV above and below solid diagonal line
-    pm = 0.1
-    ax.plot([limits[0], limits[1]], [limits[0] + pm, limits[1] + pm], 'k--', linewidth=1.0, label=r'$\pm %.2f \mathrm{eV}$' % pm)
-    ax.plot([limits[0] + pm, limits[1]], [limits[0], limits[1] - pm], 'k--', linewidth=1.0)
-
-    ax.text(0.01, 0.99, string, family='monospace', fontsize=18, transform=ax.transAxes, va='top', color='k')
-
-    axins = ax.inset_axes([0.65, 0.1, 0.3, 0.3])
-    axins.patch.set_alpha(0)
-    axins.hist(np.array(trp) - np.array(trt), bins=20, range=(limits[0]/2,-limits[0]/2), color='grey', alpha=0.5)
-    axins.hist(np.array(tep) - np.array(tet), bins=20, range=(limits[0]/2,-limits[0]/2), color='crimson', alpha=0.5)
-    axins.axvline(0.0, linestyle='-', linewidth=0.5, color='black')
-    ax.tick_params(labelsize=14)
-    axins.get_yaxis().set_visible(False)
-    for spine in ['right', 'left', 'top']:
-        axins.spines[spine].set_visible(False)
-    return fig
-
-def theo_act(dist, G_opt=0.10, scale=1.0, eU=0.85, j_d=1):
-    kb, T = 8.617e-5, 298.15
-    j_ki = np.exp((-np.abs(dist - G_opt) + 0.86 - eU) / (kb * T))
-    j = 1/96**2 * np.sum(scale / (1 / j_d + 1 / j_ki))
-    return j
-
 cmap = truncate_colormap(plt.get_cmap('viridis'), minval=1.0, maxval=0.0, n=100)
 
 library_names = ['AgPdPtRu',
