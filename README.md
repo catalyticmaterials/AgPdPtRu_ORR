@@ -1,8 +1,8 @@
 # AgPdPtRu_ORR
 
-This repository is tied to the manuscript *"A Flexible Theory for Catalysis: Learning Alkaline Oxygen Reduction on Complex Solid Solutions within the Ag-Pd-Pt-Ru Composition Space"* found at [10.26434/chemrxiv-2023-szl7b](https://doi.org/10.26434/chemrxiv-2023-szl7b) and serves to make the experimental and computational data publicly available.
+This repository is tied to the manuscript *"A Flexible Theory for Catalysis: Learning Alkaline Oxygen Reduction on Complex Solid Solutions within the Ag-Pd-Pt-Ru Composition Space"* found at [DOI:10.1002/anie.202307187](https://doi.org/10.1002/anie.202307187) and serves to make the experimental and computational data publicly available.
 
-To reproduce the results and figures, it will be necessary to install the *utils* package. By running *00_get_dists_experiment.py* and *00_get_dists_grid.py* it is possible to obtain the adsorption energy distributions of \*OH and \*O, however the folder dist_libraries is also avaible for download at [ERDA](https://sid.erda.dk/cgi-sid/ls.py?share_id=Eh84Rp6A39) (4.11GB).
+To reproduce the data analysis and figures, it will be necessary to install the *utils* package. By running *00_get_dists_experiment.py* and *00_get_dists_grid.py* it is possible to obtain the adsorption energy distributions of \*OH and \*O, however the folder dist_libraries is also avaible for download at [ERDA](https://sid.erda.dk/cgi-sid/ls.py?share_id=Eh84Rp6A39) (4.11GB).
 
 An overview of the repository:
 
