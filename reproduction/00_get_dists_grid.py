@@ -57,7 +57,6 @@ with open(f'dist_libraries/{alloy}_equi.pkl', 'wb') as output:
 
 
 # Iterate through a 1% composition grid of the ternary alloys and predict adsorbtion energy distributions
-
 frac_list = get_molar_fractions(0.01, 4)
 mask = np.all(frac_list != 0.0, axis=1)
 frac_list = frac_list[~mask]
